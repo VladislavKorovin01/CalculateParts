@@ -83,6 +83,7 @@
             this.dataGridViewMainForm.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewMainForm.Size = new System.Drawing.Size(555, 322);
             this.dataGridViewMainForm.TabIndex = 1;
+            this.dataGridViewMainForm.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewMainForm_CellDoubleClick);
             // 
             // MainForm
             // 

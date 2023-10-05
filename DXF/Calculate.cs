@@ -1,11 +1,10 @@
 ﻿
 using netDxf.Entities;
 using netDxf;
-using System.Reflection.Metadata.Ecma335;
 
 namespace DXF
 {
-    public class CalculatePart
+    public class Calculate
     {
 
         /// <summary>
