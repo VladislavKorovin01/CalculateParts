@@ -36,11 +36,11 @@ namespace CalculateDXFs
 
            var index = e.RowIndex;
 
-            MessageBox.Show(index.ToString());
+            //MessageBox.Show(index.ToString());
 
             var part = parts[index];
             
-            MessageBox.Show($"Name: {part.Name} \n Area: {part.Area}");
+            //MessageBox.Show($"Name: {part.Name} \n Area: {part.Area}");
         }
     }
 }

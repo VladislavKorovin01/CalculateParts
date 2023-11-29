@@ -54,7 +54,7 @@ namespace DXF
                 }
             }
             //Console.WriteLine($"Xmax: {Xmax} Ymax: {Ymax} \n Xmin: {Xmin} Ymin: {Ymin}");
-            double area = Math.Round((Xmax + Xmin) * (Ymax + Ymin), 2);
+            double area = Math.Round(((Xmax + Xmin) * (Ymax + Ymin))/1000000, 6);
             return area;
         }
 
