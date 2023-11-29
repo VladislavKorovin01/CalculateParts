@@ -39,7 +39,13 @@ namespace CalculateDXFs
             //MessageBox.Show(index.ToString());
 
             var part = parts[index];
-            
+            var formPart = new PartForm(part);
+            Hide();
+            formPart.ShowDialog();
+            Show();
+
+            parts[index] = formPart._part;
+
             //MessageBox.Show($"Name: {part.Name} \n Area: {part.Area}");
         }
     }
