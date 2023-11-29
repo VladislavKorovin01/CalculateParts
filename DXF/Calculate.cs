@@ -37,15 +37,15 @@ namespace DXF
                 {
                     Xmax = Math.Round(GetMax(Xmax, ((Line)ent).StartPoint.X), 2);
                     Xmin = Math.Round(GetMax(Xmin, ((Line)ent).StartPoint.X), 2);
-                    Ymax = Math.Round(GetMax(Ymax, ((Line)ent).StartPoint.X), 2);
-                    Ymin = Math.Round(GetMax(Ymin, ((Line)ent).StartPoint.X), 2);
+                    Ymax = Math.Round(GetMax(Ymax, ((Line)ent).StartPoint.Y), 2);
+                    Ymin = Math.Round(GetMax(Ymin, ((Line)ent).StartPoint.Y), 2);
                 }
                 else if (ent is Circle)
                 {
                     double CXmax = ((Circle)ent).Center.X + ((Circle)ent).Radius;
                     double CXmin = ((Circle)ent).Center.X - ((Circle)ent).Radius;
-                    double CYmax = ((Circle)ent).Center.Y - ((Circle)ent).Radius;
-                    double CYmin = ((Circle)ent).Center.Y + ((Circle)ent).Radius;
+                    double CYmax = ((Circle)ent).Center.Y + ((Circle)ent).Radius;
+                    double CYmin = ((Circle)ent).Center.Y - ((Circle)ent).Radius;
 
                     Xmax = Math.Round(GetMax(Xmax, CXmax), 2);
                     Xmin = Math.Round(GetMin(Xmin, CXmin), 2);
@@ -54,7 +54,7 @@ namespace DXF
                 }
             }
             //Console.WriteLine($"Xmax: {Xmax} Ymax: {Ymax} \n Xmin: {Xmin} Ymin: {Ymin}");
-            double area = Math.Round((Xmax - Xmin) * (Ymax - Ymin), 2);
+            double area = Math.Round((Xmax + Xmin) * (Ymax + Ymin), 2);
             return area;
         }
 
