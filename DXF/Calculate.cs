@@ -15,10 +15,10 @@ namespace DXF
         public double GetAreaPart(string path)
         {
             DxfDocument doc = DxfDocument.Load(path);
-            double Xmax = 0;
-            double Ymax = 0;
-            double Xmin = 0;
-            double Ymin = 0;
+            
+            List<double> CooX = new List<double>();
+            List<double> CooY = new List<double>();
+
 
             foreach (EntityObject ent in doc.Entities.All.ToList())
             {
@@ -26,19 +26,16 @@ namespace DXF
                 {
                     foreach (Polyline2DVertex vert in ((Polyline2D)ent).Vertexes.ToList())
                     {
-                        //Console.WriteLine($"X: {vert.Position.X} Y: {vert.Position.Y}");
-                        Xmax = Math.Round(GetMax(Xmax, vert.Position.X), 2);
-                        Xmin = Math.Round(GetMin(Xmin, vert.Position.X), 2);
-                        Ymax = Math.Round(GetMax(Ymax, vert.Position.Y), 2);
-                        Ymin = Math.Round(GetMin(Ymin, vert.Position.Y), 2);
+                        CooX.Add(vert.Position.X);
+                        CooY.Add(vert.Position.Y);
                     }
                 }
                 else if (ent is Line)
                 {
-                    Xmax = Math.Round(GetMax(Xmax, ((Line)ent).StartPoint.X), 2);
-                    Xmin = Math.Round(GetMax(Xmin, ((Line)ent).StartPoint.X), 2);
-                    Ymax = Math.Round(GetMax(Ymax, ((Line)ent).StartPoint.Y), 2);
-                    Ymin = Math.Round(GetMax(Ymin, ((Line)ent).StartPoint.Y), 2);
+                    CooX.Add(((Line)ent).StartPoint.X);
+                    CooY.Add(((Line)ent).StartPoint.Y);
+                    CooX.Add(((Line)ent).EndPoint.X);
+                    CooY.Add(((Line)ent).EndPoint.Y);
                 }
                 else if (ent is Circle)
                 {
@@ -47,14 +44,17 @@ namespace DXF
                     double CYmax = ((Circle)ent).Center.Y + ((Circle)ent).Radius;
                     double CYmin = ((Circle)ent).Center.Y - ((Circle)ent).Radius;
 
-                    Xmax = Math.Round(GetMax(Xmax, CXmax), 2);
-                    Xmin = Math.Round(GetMin(Xmin, CXmin), 2);
-                    Ymax = Math.Round(GetMax(Ymax, CYmax), 2);
-                    Ymin = Math.Round(GetMax(Ymin, CYmin), 2);
+                    CooX.Add(CXmax);
+                    CooY.Add(CYmax);
+                    CooX.Add(CXmin);
+                    CooY.Add(CYmin);
                 }
             }
-            //Console.WriteLine($"Xmax: {Xmax} Ymax: {Ymax} \n Xmin: {Xmin} Ymin: {Ymin}");
-            double area = Math.Round(((Xmax + Xmin) * (Ymax + Ymin))/1000000, 6);
+            double xmax = Math.Abs(CooX.Max());
+            double xmin = Math.Abs(CooX.Min());
+            double ymax = Math.Abs(CooY.Max());
+            double ymin = Math.Abs(CooY.Min());
+            double area = Math.Round(((xmax + xmin) * (ymax + ymin))/1000000, 6);
             return area;
         }
 
@@ -68,20 +68,6 @@ namespace DXF
                 parts.Add(new Part(path) {Area = area });
             }
             return parts;
-        }
-
-        private double GetMax(double item1, double item2)
-        {
-            if (item1 > item2)
-                return item1;
-            return item2;
-        }
-
-        private double GetMin(double item1, double item2)
-        {
-            if (item1 > item2)
-                return item2;
-            return item1;
         }
     }
 }
